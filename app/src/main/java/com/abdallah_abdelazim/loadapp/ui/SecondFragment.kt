@@ -1,4 +1,4 @@
-package com.abdallah_abdelazim.loadapp
+package com.abdallah_abdelazim.loadapp.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.abdallah_abdelazim.loadapp.R
 import com.abdallah_abdelazim.loadapp.databinding.FragmentSecondBinding
 
 /**
