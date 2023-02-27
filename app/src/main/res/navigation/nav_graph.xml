@@ -3,26 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/DownloadFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.abdallah_abdelazim.loadapp.ui.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/DownloadFragment"
+        android:name="com.abdallah_abdelazim.loadapp.ui.download.DownloadFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_download">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_DownloadFragment_to_DownloadDetailsFragment"
+            app:destination="@id/DownloadDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.abdallah_abdelazim.loadapp.ui.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/DownloadDetailsFragment"
+        android:name="com.abdallah_abdelazim.loadapp.ui.details.DownloadDetailsFragment"
+        android:label="@string/download_details_fragment_label"
+        tools:layout="@layout/fragment_download_details">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_DownloadDetailsFragment_to_DownloadFragment"
+            app:destination="@id/DownloadFragment" />
     </fragment>
 </navigation>

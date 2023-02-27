@@ -1,20 +1,16 @@
-package com.abdallah_abdelazim.loadapp.ui
+package com.abdallah_abdelazim.loadapp.ui.details
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.abdallah_abdelazim.loadapp.R
-import com.abdallah_abdelazim.loadapp.databinding.FragmentSecondBinding
+import com.abdallah_abdelazim.loadapp.databinding.FragmentDownloadDetailsBinding
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
-class SecondFragment : Fragment() {
+class DownloadDetailsFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentDownloadDetailsBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,9 +19,9 @@ class SecondFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentDownloadDetailsBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -34,7 +30,9 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            findNavController().navigate(
+                DownloadDetailsFragmentDirections.actionDownloadDetailsFragmentToDownloadFragment()
+            )
         }
     }
 
