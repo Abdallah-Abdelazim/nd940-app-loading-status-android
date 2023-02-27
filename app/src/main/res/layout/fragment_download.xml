@@ -6,23 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".ui.download.DownloadFragment">
 
-    <TextView
-        android:id="@+id/textview_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_first_fragment"
-        app:layout_constraintBottom_toTopOf="@id/button_first"
+    <ImageView
+        android:id="@+id/iv_download"
+        android:layout_width="0dp"
+        android:layout_height="184dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cloud_download"
+        app:tint="?colorPrimary" />
+
+    <RadioGroup
+        android:id="@+id/radio_group_download_options"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_download"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_download">
+
+        <RadioButton
+            android:id="@+id/radio_button_glide"
+            style="@style/DownloadOptionRadioButton"
+            android:text="@string/download_radio_button_text_glide" />
+
+        <RadioButton
+            android:id="@+id/radio_button_load_app"
+            style="@style/DownloadOptionRadioButton"
+            android:text="@string/download_radio_button_text_load_app" />
+
+        <RadioButton
+            android:id="@+id/radio_button_retrofit"
+            style="@style/DownloadOptionRadioButton"
+            android:text="@string/download_radio_button_text_retrofit" />
+    </RadioGroup>
 
     <Button
-        android:id="@+id/button_first"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_download"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/next"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:text="Download"
+        android:textAllCaps="false"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_first" />
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

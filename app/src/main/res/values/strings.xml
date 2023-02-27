@@ -3,9 +3,10 @@
 
     <string name="download_details_fragment_label">Download Details</string>
 
+    <string name="download_radio_button_text_glide">Glide - Image loading library by BumpTech</string>
+    <string name="download_radio_button_text_load_app">LoadApp - Current repository by Udacity</string>
+    <string name="download_radio_button_text_retrofit">Retrofit - Type-safe HTTP client for Android and Java by Square, Inc</string>
+
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
