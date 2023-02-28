@@ -15,17 +15,10 @@ ext {
             fragment_ktx      : "1.5.5",
             material          : "1.8.0",
             constraintlayout  : "2.1.4",
-            glide             : "4.14.2",
-            lifecycle         : "2.5.1",
             navigation        : "2.5.3",
-            moshi             : "1.14.0",
-            retrofit          : "2.9.0",
             coroutines_android: "1.6.4",
             test_junit        : "4.13.2",
             androidtest_junit : "1.1.5",
             espresso          : "3.5.1",
-            koin              : "3.3.2",
-            okhttp            : "4.10.0",
-            chucker           : "3.5.2"
     ]
 }

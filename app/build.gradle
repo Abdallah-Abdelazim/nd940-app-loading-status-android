@@ -50,36 +50,12 @@ dependencies {
     implementation "com.google.android.material:material:$versions.material"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraintlayout"
 
-    // Glide
-    implementation "com.github.bumptech.glide:glide:$versions.glide"
-    ksp "com.github.bumptech.glide:ksp:$versions.glide"
-
-    // Lifecycle
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
-
     // Jetpack Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$versions.navigation"
 
-    // Retrofit & Moshi
-    implementation "com.squareup.moshi:moshi:$versions.moshi"
-    ksp "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshi"
-    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
-    implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
-    implementation "com.squareup.retrofit2:converter-scalars:$versions.retrofit"
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:$versions.okhttp"))
-    implementation "com.squareup.okhttp3:okhttp"
-    implementation "com.squareup.okhttp3:logging-interceptor"
-
-    // Chucker
-    debugImplementation "com.github.chuckerteam.chucker:library:$versions.chucker"
-    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:$versions.chucker"
-
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines_android"
-
-    // Koin DI
-    implementation "io.insert-koin:koin-android:$versions.koin"
 
     // Testing
     testImplementation "junit:junit:$versions.test_junit"

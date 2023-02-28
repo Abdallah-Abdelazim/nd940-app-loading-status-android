@@ -133,7 +133,6 @@ class DownloadFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
         }
 
         binding.radioGroupDownloadOptions.setOnCheckedChangeListener { _, checkedId ->
