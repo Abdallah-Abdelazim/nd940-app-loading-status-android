@@ -13,7 +13,7 @@
     <string name="loading_button_download">Download</string>
     <string name="loading_button_loading">We are loading</string>
 
-    <string name="err_msg_not_selected_download_method">Please select the download method first!</string>
+    <string name="err_msg_not_selected_download_file">Please select the download file option first!</string>
 
     <string name="notification_channel_id" translatable="false">download_channel</string>
     <string name="notification_channel_name">Downloaded files</string>

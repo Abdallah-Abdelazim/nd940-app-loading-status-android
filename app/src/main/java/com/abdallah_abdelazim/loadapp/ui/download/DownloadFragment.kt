@@ -129,7 +129,7 @@ class DownloadFragment : Fragment() {
             } else {
                 Toast.makeText(
                     requireContext(),
-                    resources.getString(R.string.err_msg_not_selected_download_method),
+                    resources.getString(R.string.err_msg_not_selected_download_file),
                     Toast.LENGTH_SHORT
                 ).show()
             }
