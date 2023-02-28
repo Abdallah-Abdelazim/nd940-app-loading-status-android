@@ -17,7 +17,6 @@ import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.*
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDeepLinkBuilder
 import com.abdallah_abdelazim.loadapp.R
@@ -152,15 +151,15 @@ class DownloadFragment : Fragment() {
             else -> getString(R.string.download_status_unknown)
         }
 
-        val args = bundleOf(
-            DownloadDetailsFragment.ARG_DOWNLOAD_STATUS to status,
-            DownloadDetailsFragment.ARG_DOWNLOAD_FILE_NAME to currentDownloadFileOptionName
-        )
-
         val pendingIntent = NavDeepLinkBuilder(requireContext())
             .setGraph(R.navigation.nav_graph)
             .setDestination(R.id.DownloadDetailsFragment)
-            .setArguments(args)
+            .setArguments(
+                DownloadDetailsFragment.createArgsBundle(
+                    status,
+                    currentDownloadFileOptionName
+                )
+            )
             .createPendingIntent()
 
         // Build the notification

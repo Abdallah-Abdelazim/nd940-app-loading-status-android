@@ -25,4 +25,8 @@
     <string name="download_notification_title">Download completed</string>
     <string name="download_notification_button_text">Check the status</string>
 
+    <string name="download_file_name_label">File name</string>
+    <string name="download_status_label">Status</string>
+    <string name="ok">OK</string>
+
 </resources>

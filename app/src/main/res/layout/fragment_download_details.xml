@@ -7,22 +7,58 @@
     tools:context=".ui.details.DownloadDetailsFragment">
 
     <TextView
-        android:id="@+id/textview_second"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_label_file_name"
+        style="@style/DownloadDetailLabel"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hello 2"
-        app:layout_constraintBottom_toTopOf="@id/button_second"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:text="@string/download_file_name_label"
+        app:layout_constraintEnd_toStartOf="@id/tv_file_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_second"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_file_name"
+        style="@style/DownloadDetailText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Previous"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_label_file_name"
+        app:layout_constraintTop_toTopOf="@id/tv_label_file_name"
+        tools:text="The file name will appear here" />
+
+    <TextView
+        android:id="@+id/tv_label_download_status"
+        style="@style/DownloadDetailLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/download_status_label"
+        app:layout_constraintEnd_toStartOf="@id/tv_download_status"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_file_name" />
+
+    <TextView
+        android:id="@+id/tv_download_status"
+        style="@style/DownloadDetailText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_label_download_status"
+        app:layout_constraintTop_toTopOf="@id/tv_label_download_status"
+        tools:text="Success" />
+
+    <Button
+        android:id="@+id/btn_ok"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:backgroundTint="?colorSecondary"
+        android:padding="16dp"
+        android:text="@string/ok"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_second" />
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

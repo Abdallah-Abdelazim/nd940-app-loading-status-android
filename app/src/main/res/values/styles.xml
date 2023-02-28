@@ -6,4 +6,17 @@
         <item name="android:layout_marginBottom">16dp</item>
     </style>
 
+    <style name="DownloadDetailLabel">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+    </style>
+
+    <style name="DownloadDetailText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?colorPrimaryVariant</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">24dp</item>
+    </style>
+
 </resources>
