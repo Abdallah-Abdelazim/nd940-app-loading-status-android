@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.abdallah_abdelazim.loadapp.R
 import com.abdallah_abdelazim.loadapp.databinding.FragmentDownloadBinding
+import com.abdallah_abdelazim.loadapp.widget.loading_button.ButtonState
 
 class DownloadFragment : Fragment() {
 
@@ -23,11 +26,27 @@ class DownloadFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        binding.buttonFirst.setOnClickListener {
-//            findNavController().navigate(
-//                DownloadFragmentDirections.actionDownloadFragmentToDownloadDetailsFragment()
-//            )
-//        }
+        setupClickListeners()
+    }
+
+    private fun setupClickListeners() {
+        binding.btnDownload.setOnClickListener {
+            if (binding.radioGroupDownloadOptions.checkedRadioButtonId != -1) {
+                download()
+                binding.btnDownload.buttonState = ButtonState.Clicked
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    resources.getString(R.string.err_msg_not_selected_download_method),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        }
+    }
+
+    private fun download() {
+
     }
 
     override fun onDestroyView() {

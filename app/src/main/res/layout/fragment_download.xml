@@ -42,17 +42,17 @@
             android:text="@string/download_radio_button_text_retrofit" />
     </RadioGroup>
 
-    <Button
+    <com.abdallah_abdelazim.loadapp.widget.loading_button.LoadingButton
         android:id="@+id/btn_download"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_margin="16dp"
-        android:padding="16dp"
-        android:text="Download"
-        android:textAllCaps="false"
-        android:textSize="20sp"
+        app:defaultBackgroundColor="?colorPrimary"
+        app:defaultText="@string/loading_button_download"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:loadingBackgroundColor="?colorPrimaryVariant"
+        app:loadingText="@string/loading_button_loading" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

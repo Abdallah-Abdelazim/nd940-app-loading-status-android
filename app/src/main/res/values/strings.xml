@@ -7,6 +7,9 @@
     <string name="download_radio_button_text_load_app">LoadApp - Current repository by Udacity</string>
     <string name="download_radio_button_text_retrofit">Retrofit - Type-safe HTTP client for Android and Java by Square, Inc</string>
 
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="loading_button_download">Download</string>
+    <string name="loading_button_loading">We are loading</string>
+
+    <string name="err_msg_not_selected_download_method">Please select the download method first!</string>
+
 </resources>
