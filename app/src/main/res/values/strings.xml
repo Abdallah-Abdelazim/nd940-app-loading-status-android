@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">LoadApp</string>
+    <string name="app_description">Download files from Internet</string>
 
     <string name="download_details_fragment_label">Download Details</string>
+
+    <string name="title_select_download_file">Select which file to download</string>
 
     <string name="download_radio_button_text_glide">Glide - Image loading library by BumpTech</string>
     <string name="download_radio_button_text_load_app">LoadApp - Current repository by Udacity</string>
@@ -11,5 +14,15 @@
     <string name="loading_button_loading">We are loading</string>
 
     <string name="err_msg_not_selected_download_method">Please select the download method first!</string>
+
+    <string name="notification_channel_id" translatable="false">download_channel</string>
+    <string name="notification_channel_name">Downloaded files</string>
+
+    <string name="download_status_success">Success</string>
+    <string name="download_status_failed">Fail</string>
+
+    <string name="download_notification_title">Udacity: Android Kotlin Nanodegree</string>
+    <string name="download_notification_description">The Project 3 repository is downloaded</string>
+    <string name="download_notification_button_text">See changes</string>
 
 </resources>
