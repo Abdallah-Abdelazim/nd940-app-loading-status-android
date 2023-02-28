@@ -20,9 +20,9 @@
 
     <string name="download_status_success">Success</string>
     <string name="download_status_failed">Fail</string>
+    <string name="download_status_unknown">Unknown</string>
 
-    <string name="download_notification_title">Udacity: Android Kotlin Nanodegree</string>
-    <string name="download_notification_description">The Project 3 repository is downloaded</string>
-    <string name="download_notification_button_text">See changes</string>
+    <string name="download_notification_title">Download completed</string>
+    <string name="download_notification_button_text">Check the status</string>
 
 </resources>

@@ -11,9 +11,6 @@ import com.abdallah_abdelazim.loadapp.databinding.FragmentDownloadDetailsBinding
 class DownloadDetailsFragment : Fragment() {
 
     private var _binding: FragmentDownloadDetailsBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -39,5 +36,12 @@ class DownloadDetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+
+        const val ARG_DOWNLOAD_STATUS = "arg_download_status"
+        const val ARG_DOWNLOAD_FILE_NAME = "arg_download_file_name"
+
     }
 }

@@ -1,11 +1,10 @@
 package com.abdallah_abdelazim.loadapp.ui.download
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Build
@@ -16,67 +15,39 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.annotation.IdRes
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDeepLinkBuilder
 import com.abdallah_abdelazim.loadapp.R
 import com.abdallah_abdelazim.loadapp.databinding.FragmentDownloadBinding
+import com.abdallah_abdelazim.loadapp.ui.details.DownloadDetailsFragment
+import com.abdallah_abdelazim.loadapp.ui.download.DownloadBroadcastReceiver.DownloadStatus
 import com.abdallah_abdelazim.loadapp.widget.loading_button.ButtonState
+import permissions.dispatcher.NeedsPermission
+import permissions.dispatcher.RuntimePermissions
 
+@RuntimePermissions
 class DownloadFragment : Fragment() {
 
     private var _binding: FragmentDownloadBinding? = null
     private val binding get() = _binding!!
 
-    private var downloadID: Long = 0
     private var downloadFileOptionName: String = ""
 
-    private lateinit var downloadManager: DownloadManager
     private lateinit var notificationManager: NotificationManager
 
-    private val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+    private val receiver = DownloadBroadcastReceiver { downloadStatus ->
 
-            val action = intent?.action
+        binding.btnDownload.buttonState = ButtonState.Completed
 
-            if (id == downloadID && action == DownloadManager.ACTION_DOWNLOAD_COMPLETE) {
-
-                // Get download status
-
-                val query = DownloadManager.Query().apply {
-                    setFilterById(id)
-                }
-                val cursor = downloadManager.query(query)
-
-                if (cursor.moveToFirst() && cursor.count > 0) {
-
-                    val statusColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
-                    if (statusColumnIndex >= 0) {
-                        val downloadStatus = cursor.getInt(statusColumnIndex)
-
-                        if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL) {
-                            sendDownloadNotification(
-                                getString(R.string.download_status_success),
-                                downloadFileOptionName
-                            )
-                        } else {
-                            sendDownloadNotification(
-                                getString(R.string.download_status_failed),
-                                downloadFileOptionName
-                            )
-                        }
-                    }
-                }
-
-                binding.btnDownload.buttonState = ButtonState.Completed
-            }
-        }
+        sendDownloadNotificationWithPermissionCheck(downloadStatus)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        downloadManager = getSystemService(requireContext(), DownloadManager::class.java)!!
         notificationManager = getSystemService(requireContext(), NotificationManager::class.java)!!
 
         createDownloadNotificationChannel()
@@ -96,7 +67,6 @@ class DownloadFragment : Fragment() {
                 getString(R.string.notification_channel_name),
                 NotificationManager.IMPORTANCE_HIGH
             )
-            notificationChannel.enableVibration(true)
 
             notificationManager.createNotificationChannel(notificationChannel)
         }
@@ -118,9 +88,8 @@ class DownloadFragment : Fragment() {
 
     private fun setupUiListeners() {
         binding.btnDownload.setOnClickListener {
-            val checkedRadioButtonId = binding.radioGroupDownloadOptions.checkedRadioButtonId
-            if (checkedRadioButtonId != -1) {
-                download(mapDownloadFileOptionToUrl(checkedRadioButtonId))
+            if (binding.radioGroupDownloadOptions.checkedRadioButtonId != -1) {
+                download()
                 binding.btnDownload.buttonState = ButtonState.Clicked
             } else {
                 Toast.makeText(
@@ -128,13 +97,6 @@ class DownloadFragment : Fragment() {
                     resources.getString(R.string.err_msg_not_selected_download_file),
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-        }
-
-        binding.radioGroupDownloadOptions.setOnCheckedChangeListener { _, checkedId ->
-            if (checkedId != -1) {
-                downloadFileOptionName =
-                    (binding.root.findViewById(checkedId) as RadioButton).text as String
             }
         }
     }
@@ -148,57 +110,78 @@ class DownloadFragment : Fragment() {
         }
     }
 
-    private fun download(downloadUrl: String) {
-        val request =
-            DownloadManager.Request(Uri.parse(downloadUrl))
-                .setTitle(getString(R.string.app_name))
-                .setDescription(getString(R.string.app_description))
-                .setAllowedOverMetered(true)
-                .setAllowedOverRoaming(true)
+    private fun download() {
+        val checkedRadioButtonId = binding.radioGroupDownloadOptions.checkedRadioButtonId
+        if (checkedRadioButtonId >= 0) {
+            val downloadUrl = mapDownloadFileOptionToUrl(checkedRadioButtonId)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            request.setRequiresCharging(false)
+            val request =
+                DownloadManager.Request(Uri.parse(downloadUrl))
+                    .setTitle(getString(R.string.app_name))
+                    .setDescription(getString(R.string.app_description))
+                    .setAllowedOverMetered(true)
+                    .setAllowedOverRoaming(true)
+                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                request.setRequiresCharging(false)
+            }
+
+            val downloadManager =
+                getSystemService(requireContext(), DownloadManager::class.java)!!
+
+            receiver.downloadId = downloadManager.enqueue(request)
+
+            downloadFileOptionName =
+                (binding.root.findViewById(checkedRadioButtonId) as RadioButton).text as String
         }
-
-        val downloadManager =
-            getSystemService(requireContext(), DownloadManager::class.java)!!
-
-        downloadID = downloadManager.enqueue(request)
     }
 
-    private fun sendDownloadNotification(msg: String, fileName: String) {
+    @SuppressLint("InlinedApi")
+    @NeedsPermission(Manifest.permission.POST_NOTIFICATIONS)
+    fun sendDownloadNotification(downloadStatus: DownloadStatus?) {
 
-        // TODO
-//        val intent = Intent(context, DetailActivity::class.java)
-//        intent.putExtra("status", msg)
-//        intent.putExtra("filename", fileName)
-//
-//        val pendingIntent = PendingIntent.getActivity(
-//            context,
-//            NOTIFICATION_ID,
-//            intent,
-//            PendingIntent.FLAG_UPDATE_CURRENT
-//        )
-//
-//        val cloudImage = BitmapFactory.decodeResource(context.resources, R.drawable.cloud_download)
-//        val bigPicStyle = NotificationCompat.BigPictureStyle()
-//            .bigPicture(cloudImage)
-//            .bigLargeIcon(null)
-//
-//        // Build the notification
-//        val builder =
-//            NotificationCompat.Builder(context, context.getString(R.string.notification_channel_id))
-//        builder.setSmallIcon(R.drawable.cloud_download)
-//            .setContentTitle(context.getString(R.string.app_name))
-//            .setContentText(msg)
-//            .setContentIntent(pendingIntent)
-//            .setAutoCancel(true)
-//            .addAction(0, context.getString(R.string.see_details), pendingIntent)
-//            .setStyle(bigPicStyle)
-//            .setLargeIcon(cloudImage)
-//            .priority = NotificationCompat.PRIORITY_HIGH
-//
-//        notify(NOTIFICATION_ID, builder.build())
+        val status = when (downloadStatus) {
+            DownloadStatus.DOWNLOAD_SUCCESS -> getString(R.string.download_status_success)
+            DownloadStatus.DOWNLOAD_FAILED -> getString(R.string.download_status_failed)
+            else -> getString(R.string.download_status_unknown)
+        }
+
+        val args = bundleOf(
+            DownloadDetailsFragment.ARG_DOWNLOAD_STATUS to status,
+            DownloadDetailsFragment.ARG_DOWNLOAD_FILE_NAME to downloadFileOptionName
+        )
+
+        val pendingIntent = NavDeepLinkBuilder(requireContext())
+            .setGraph(R.navigation.nav_graph)
+            .setDestination(R.id.DownloadDetailsFragment)
+            .setArguments(args)
+            .createPendingIntent()
+
+        // Build the notification
+        val notificationBuilder = NotificationCompat.Builder(
+            requireContext(),
+            getString(R.string.notification_channel_id)
+        )
+            .setSmallIcon(R.drawable.ic_cloud_download)
+            .setContentTitle(getString(R.string.download_notification_title))
+            .setContentText(downloadFileOptionName)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .addAction(0, getString(R.string.download_notification_button_text), pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+        notificationManager.notify(DOWNLOAD_NOTIFICATION_ID, notificationBuilder.build())
+    }
+
+    @Suppress("OVERRIDE_DEPRECATION")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        onRequestPermissionsResult(requestCode, grantResults)
     }
 
     override fun onDestroyView() {
@@ -212,6 +195,8 @@ class DownloadFragment : Fragment() {
     }
 
     companion object {
+
+        const val DOWNLOAD_NOTIFICATION_ID = 0
 
         private const val LOAD_APP_STARTER_REPO_URL =
             "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/refs/heads/master.zip"
