@@ -3,7 +3,6 @@ package com.abdallah_abdelazim.loadapp.ui.download
 import android.app.DownloadManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -17,7 +16,6 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.annotation.IdRes
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.*
 import androidx.fragment.app.Fragment
 import com.abdallah_abdelazim.loadapp.R
@@ -35,9 +33,6 @@ class DownloadFragment : Fragment() {
     private lateinit var downloadManager: DownloadManager
     private lateinit var notificationManager: NotificationManager
 
-    private lateinit var pendingIntent: PendingIntent
-    private lateinit var action: NotificationCompat.Action
-
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
@@ -48,8 +43,9 @@ class DownloadFragment : Fragment() {
 
                 // Get download status
 
-                val query = DownloadManager.Query()
-                query.setFilterById(id)
+                val query = DownloadManager.Query().apply {
+                    setFilterById(id)
+                }
                 val cursor = downloadManager.query(query)
 
                 if (cursor.moveToFirst() && cursor.count > 0) {

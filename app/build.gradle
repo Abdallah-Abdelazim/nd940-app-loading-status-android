@@ -3,6 +3,7 @@ plugins {
     id "org.jetbrains.kotlin.android"
     id "kotlin-parcelize"
     id "androidx.navigation.safeargs"
+    id "org.jetbrains.kotlin.kapt"
     id "com.google.devtools.ksp"
 }
 
@@ -56,6 +57,10 @@ dependencies {
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines_android"
+
+    // PermissionsDispatcher
+    implementation "com.github.permissions-dispatcher:permissionsdispatcher:$versions.permission_dispatcher"
+    kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:$versions.permission_dispatcher"
 
     // Testing
     testImplementation "junit:junit:$versions.test_junit"

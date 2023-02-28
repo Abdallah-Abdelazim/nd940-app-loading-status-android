@@ -4,21 +4,23 @@ plugins {
     id "com.android.library" version '7.4.2' apply false
     id "org.jetbrains.kotlin.android" version "1.8.0" apply false
     id "androidx.navigation.safeargs" version "2.5.3" apply false
+    id "org.jetbrains.kotlin.kapt" version "1.8.0" apply false
     id "com.google.devtools.ksp" version "1.8.10-1.0.9" apply false
 }
 
 ext {
     versions = [
-            core_ktx          : "1.9.0",
-            appcompat         : "1.6.1",
-            activity_ktx      : "1.6.1",
-            fragment_ktx      : "1.5.5",
-            material          : "1.8.0",
-            constraintlayout  : "2.1.4",
-            navigation        : "2.5.3",
-            coroutines_android: "1.6.4",
-            test_junit        : "4.13.2",
-            androidtest_junit : "1.1.5",
-            espresso          : "3.5.1",
+            core_ktx             : "1.9.0",
+            appcompat            : "1.6.1",
+            activity_ktx         : "1.6.1",
+            fragment_ktx         : "1.5.5",
+            material             : "1.8.0",
+            constraintlayout     : "2.1.4",
+            navigation           : "2.5.3",
+            coroutines_android   : "1.6.4",
+            test_junit           : "4.13.2",
+            androidtest_junit    : "1.1.5",
+            espresso             : "3.5.1",
+            permission_dispatcher: "4.9.2"
     ]
 }
