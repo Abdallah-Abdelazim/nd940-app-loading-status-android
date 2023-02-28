@@ -34,15 +34,20 @@ class DownloadFragment : Fragment() {
     private var _binding: FragmentDownloadBinding? = null
     private val binding get() = _binding!!
 
-    private var downloadFileOptionName: String = ""
+    private var currentDownloadFileOptionName: String = ""
 
     private lateinit var notificationManager: NotificationManager
 
-    private val receiver = DownloadBroadcastReceiver { downloadStatus ->
+    private val receiver = DownloadBroadcastReceiver(::handleCompletedDownload)
+
+    private fun handleCompletedDownload(downloadStatus: DownloadStatus?) {
 
         binding.btnDownload.buttonState = ButtonState.Completed
 
         sendDownloadNotificationWithPermissionCheck(downloadStatus)
+
+        currentDownloadFileOptionName = ""
+        receiver.downloadId = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,7 +137,7 @@ class DownloadFragment : Fragment() {
 
             receiver.downloadId = downloadManager.enqueue(request)
 
-            downloadFileOptionName =
+            currentDownloadFileOptionName =
                 (binding.root.findViewById(checkedRadioButtonId) as RadioButton).text as String
         }
     }
@@ -149,7 +154,7 @@ class DownloadFragment : Fragment() {
 
         val args = bundleOf(
             DownloadDetailsFragment.ARG_DOWNLOAD_STATUS to status,
-            DownloadDetailsFragment.ARG_DOWNLOAD_FILE_NAME to downloadFileOptionName
+            DownloadDetailsFragment.ARG_DOWNLOAD_FILE_NAME to currentDownloadFileOptionName
         )
 
         val pendingIntent = NavDeepLinkBuilder(requireContext())
@@ -165,7 +170,7 @@ class DownloadFragment : Fragment() {
         )
             .setSmallIcon(R.drawable.ic_cloud_download)
             .setContentTitle(getString(R.string.download_notification_title))
-            .setContentText(downloadFileOptionName)
+            .setContentText(currentDownloadFileOptionName)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .addAction(0, getString(R.string.download_notification_button_text), pendingIntent)
