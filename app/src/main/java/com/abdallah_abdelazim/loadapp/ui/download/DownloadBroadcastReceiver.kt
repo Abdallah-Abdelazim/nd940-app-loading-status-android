@@ -4,7 +4,7 @@ import android.app.DownloadManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 
 class DownloadBroadcastReceiver(
     private val onDownloadComplete: (DownloadStatus?) -> Unit
@@ -21,8 +21,7 @@ class DownloadBroadcastReceiver(
 
             /** Get download status **/
 
-            val downloadManager =
-                ContextCompat.getSystemService(context, DownloadManager::class.java)!!
+            val downloadManager: DownloadManager = context.getSystemService()!!
 
             val query = DownloadManager.Query().apply {
                 setFilterById(id)

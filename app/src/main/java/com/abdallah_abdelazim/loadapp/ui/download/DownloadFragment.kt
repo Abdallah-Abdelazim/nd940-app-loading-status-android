@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.*
+import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDeepLinkBuilder
 import com.abdallah_abdelazim.loadapp.R
@@ -52,7 +53,7 @@ class DownloadFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        notificationManager = getSystemService(requireContext(), NotificationManager::class.java)!!
+        notificationManager = requireContext().getSystemService()!!
 
         createDownloadNotificationChannel()
 
@@ -131,8 +132,7 @@ class DownloadFragment : Fragment() {
                 request.setRequiresCharging(false)
             }
 
-            val downloadManager =
-                getSystemService(requireContext(), DownloadManager::class.java)!!
+            val downloadManager: DownloadManager = requireContext().getSystemService()!!
 
             receiver.downloadId = downloadManager.enqueue(request)
 
